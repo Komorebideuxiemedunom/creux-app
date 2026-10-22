@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://komorebideuxiemedunom.github.io/creux-app/sitemap.xml

@@ -4,4 +4,21 @@
 main{max-width:720px;margin:0 auto;padding:48px 20px}img.icon{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
 h1{font-size:34px;margin:20px 0 6px}h2{font-size:21px;margin-top:32px}p,li{color:var(--muted)}a{color:var(--accent)}
 .card{background:var(--card);border-radius:20px;padding:20px 22px;margin:22px 0;box-shadow:0 4px 16px rgba(0,0,0,.05)}
-footer{margin-top:40px;font-size:14px;color:var(--muted)}
+footer{margin-top:40px;font-size:14px;color:var(--muted)}.petit{font-size:17px;margin-top:0}
+.plage{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;color:var(--ink)}
+.plage label{display:flex;align-items:center;gap:6px;color:var(--ink)}
+.plage select{font:inherit;padding:7px 8px;border-radius:10px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
+.saison{display:flex;gap:8px;align-items:center;margin:14px 0 6px;color:var(--ink)}
+#ete{border-left:3px solid var(--accent);padding-left:12px}
+#resultat{margin-top:18px}#resultat h2{margin-top:6px}
+.frise{margin:6px 0 14px}.frise svg{width:100%;height:28px;border-radius:8px;background:rgba(127,127,127,.12);display:block}
+.frise .pic{fill:rgba(220,70,60,.28)}.frise .creux{fill:var(--accent)}
+.heures{position:relative;height:18px;font-size:12px;color:var(--muted)}.heures span{position:absolute;transform:translateX(-50%)}
+.heures span:first-child{transform:none}.heures span:last-child{transform:translateX(-100%)}
+.legende{font-size:14px;margin:4px 0}.pastille{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px}
+.pastille.creux{background:var(--accent)}.pastille.pic{background:rgba(220,70,60,.35)}
+.constat{border-radius:12px;padding:10px 12px;color:var(--ink)}.constat.ok{background:rgba(22,163,111,.12)}.constat.warning{background:rgba(232,150,40,.15)}
+.note{font-size:13px}
+.cta{background:var(--accent);border-radius:20px;padding:20px 22px;margin:28px 0}.cta p,.cta strong{color:#fff}
+.cta .btn{display:inline-block;background:#fff;color:#0E7A52;font-weight:700;border-radius:12px;padding:10px 16px;text-decoration:none;margin-top:6px}
+.heures span{white-space:nowrap}
