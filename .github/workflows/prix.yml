@@ -1,0 +1,33 @@
+name: Prix de l'électricité
+
+# Chaque lundi, relit les tarifs réglementés publiés par la CRE et met à jour les prix
+# par défaut du simulateur (tools/prix.py). Dépôt public : ces minutes ne sont pas
+# décomptées du quota Actions du compte.
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  prix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Relire les tarifs de la CRE
+        run: python3 tools/prix.py
+      - name: Publier si les prix ont changé
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git diff --quiet && echo "Tarifs inchangés." && exit 0
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Prix de l'électricité : tarifs réglementés à jour (CRE)"
+          git push
+          # Un push fait avec le jeton du workflow peut ne pas relancer Pages : on le demande.
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
