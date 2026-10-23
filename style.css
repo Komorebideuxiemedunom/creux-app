@@ -30,3 +30,7 @@ footer{margin-top:40px;font-size:14px;color:var(--muted)}.petit{font-size:17px;m
 #resultat table{width:100%;border-collapse:collapse}#resultat td{padding:8px 0;border-top:1px solid rgba(127,127,127,.2);color:var(--ink);vertical-align:top}
 #resultat td:last-child{text-align:right;padding-left:12px}
 @media (max-width:560px){.champs{grid-template-columns:1fr}#resultat td:last-child{text-align:left}}
+.grille{overflow-x:auto;padding:8px 12px}.grille table{width:100%;border-collapse:collapse;font-size:15px}
+.grille th{font-size:12px;text-align:right;color:var(--muted);font-weight:600;padding:8px 6px;vertical-align:bottom}
+.grille td{text-align:right;padding:8px 6px;border-top:1px solid rgba(127,127,127,.2);color:var(--ink);white-space:nowrap}
+.grille th:first-child,.grille td:first-child{text-align:left}.grille small{color:var(--muted);font-size:12px}

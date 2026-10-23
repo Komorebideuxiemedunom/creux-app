@@ -27,7 +27,7 @@ jobs:
           git diff --quiet && echo "Tarifs inchangés." && exit 0
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Prix de l'électricité : tarifs réglementés à jour (CRE)"
+          git add -A prix.js heures-creuses-rentable.html prix-kwh-electricite.html && git commit -m "Prix de l'électricité : tarifs réglementés à jour (CRE)"
           git push
           # Un push fait avec le jeton du workflow peut ne pas relancer Pages : on le demande.
           gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
