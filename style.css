@@ -22,3 +22,11 @@ footer{margin-top:40px;font-size:14px;color:var(--muted)}.petit{font-size:17px;m
 .cta{background:var(--accent);border-radius:20px;padding:20px 22px;margin:28px 0}.cta p,.cta strong{color:#fff}
 .cta .btn{display:inline-block;background:#fff;color:#0E7A52;font-weight:700;border-radius:12px;padding:10px 16px;text-decoration:none;margin-top:6px}
 .heures span{white-space:nowrap}
+.champs{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.champs label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted)}
+.champs label span{display:flex;align-items:center;gap:6px;color:var(--ink)}
+.champs input{width:100%;font:inherit;font-size:17px;padding:9px 10px;border-radius:10px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
+.champs small{font-size:12px}
+#resultat table{width:100%;border-collapse:collapse}#resultat td{padding:8px 0;border-top:1px solid rgba(127,127,127,.2);color:var(--ink);vertical-align:top}
+#resultat td:last-child{text-align:right;padding-left:12px}
+@media (max-width:560px){.champs{grid-template-columns:1fr}#resultat td:last-child{text-align:left}}
