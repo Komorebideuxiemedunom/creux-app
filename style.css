@@ -1,34 +1,82 @@
-:root{--bg:#F5F6F1;--ink:#151A2E;--muted:#6B6F80;--accent:#16A36F;--card:#fff}
-@media (prefers-color-scheme:dark){:root{--bg:#0E1120;--ink:#F3F1EC;--muted:#A8ABB8;--card:#1B1E2E}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:720px;margin:0 auto;padding:48px 20px}img.icon{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.15)}
-h1{font-size:34px;margin:20px 0 6px}h2{font-size:21px;margin-top:32px}p,li{color:var(--muted)}a{color:var(--accent)}
-.card{background:var(--card);border-radius:20px;padding:20px 22px;margin:22px 0;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+/* Creux : une facture d'électricité bien lue. IBM Plex, chiffres en mono, un seul vert. Échelle de 8 px. */
+@font-face{font-family:"Plex";src:url(fonts/plex-sans.woff2) format("woff2");font-weight:100 700;font-display:swap}
+@font-face{font-family:"Plex Mono";src:url(fonts/plex-mono.woff2) format("woff2");font-weight:500;font-display:swap}
+:root{--bg:#F4F3EE;--ink:#12172B;--muted:#474C5E;--accent:#0B7A50;--card:#F4F3EE;--trait:#D9D8D0;--pic:#E9C9C3;
+  --s1:8px;--s2:16px;--s3:24px;--s4:32px;--s6:48px;--s8:64px;--s12:96px}
+@media (prefers-color-scheme:dark){:root{--bg:#0D1020;--ink:#F1EFE8;--muted:#B0B3C0;--accent:#3DD39B;--card:#0D1020;--trait:#2A2E40;--pic:#4A2E33}}
+*{box-sizing:border-box}html{background:var(--bg)}
+body{margin:0;color:var(--ink);font:400 18px/1.6 "Plex",system-ui,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:var(--s4) var(--s3) var(--s8)}
+a{color:var(--accent);text-underline-offset:3px}a:hover,a:focus-visible{color:var(--ink);text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+p,li{color:var(--muted);max-width:66ch}strong{color:var(--ink);font-weight:600}
+.mono,.heures,.grille td{font-family:"Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.marque{display:inline-flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;font-weight:600;margin-bottom:var(--s8)}
+.marque img{width:36px;height:36px;border-radius:9px}
+h1{font-weight:700;font-size:clamp(40px,6vw,72px);line-height:1;letter-spacing:-.025em;margin:0 0 var(--s3);max-width:18ch}
+h1.geant{font-size:clamp(88px,19vw,240px);line-height:.82;letter-spacing:-.05em;margin-bottom:var(--s4)}
+h2{font-weight:600;font-size:clamp(22px,2.4vw,28px);line-height:1.2;letter-spacing:-.01em;margin:var(--s6) 0 var(--s2)}
+.chapeau{font-size:clamp(20px,2vw,24px);line-height:1.45;color:var(--ink);max-width:40ch}
+.card{background:none;border-top:2px solid var(--ink);padding:var(--s3) 0;margin:var(--s4) 0}
+footer{margin-top:var(--s8);padding-top:var(--s3);border-top:1px solid var(--trait);font-size:15px;color:var(--muted)}
+.petit{font-size:18px;margin-top:0}
+
+/* La journée en 24 cases : la signature de Creux */
+.journee{margin:var(--s6) 0 var(--s8)}
+.journee ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(24,1fr);gap:3px}
+.journee li{height:72px;background:var(--pic);position:relative;max-width:none}
+.journee li.c{background:var(--accent)}
+.journee li span{position:absolute;bottom:-26px;left:0;font:500 12px "Plex Mono",monospace;color:var(--muted)}
+.journee li:nth-child(even) span{visibility:hidden}
+.journee p{margin:var(--s6) 0 0;font-size:15px}
+.journee .clef{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin:0 6px 0 0;background:var(--accent)}
+.journee .clef.p{background:var(--pic);margin-left:var(--s2)}
+
+/* Les outils : des lignes de facture */
+.lignes{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.lignes li{max-width:none;border-bottom:1px solid var(--trait)}
+.lignes a{display:grid;grid-template-columns:64px 1fr auto;gap:var(--s3);align-items:baseline;padding:var(--s3) 0;color:var(--ink);text-decoration:none}
+.lignes .n{font:500 15px "Plex Mono",monospace;color:var(--muted)}
+.lignes b{display:block;font-size:24px;line-height:1.25;font-weight:600;letter-spacing:-.01em}
+.lignes small{display:block;color:var(--muted);font-size:16px;margin-top:4px}
+.lignes .fl{font:500 24px "Plex Mono",monospace;color:var(--accent);transition:transform .2s}
+.lignes a:hover b,.lignes a:focus-visible b{color:var(--accent)}
+.lignes a:hover .fl,.lignes a:focus-visible .fl{transform:translateX(6px)}
+
+/* Questions : la question en marge */
+.faq{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:0 var(--s6);border-top:1px solid var(--trait);padding:var(--s3) 0}
+.faq h2{margin:0;font-size:20px}.faq p{margin:0}
+.support{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s2);background:var(--ink);color:var(--bg);padding:var(--s4);margin:var(--s8) 0 0}
+.support p,.support strong{color:var(--bg);margin:0;max-width:52ch}.support a{color:var(--bg);font-weight:600}
+.support a:hover,.support a:focus-visible{color:var(--accent)}
+@media (max-width:720px){main{padding:var(--s3) var(--s2) var(--s6)}.marque{margin-bottom:var(--s6)}.faq{grid-template-columns:1fr;gap:var(--s1)}.lignes a{grid-template-columns:40px 1fr auto;gap:var(--s2)}.journee li{height:48px}.journee li span{font-size:10px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 footer{margin-top:40px;font-size:14px;color:var(--muted)}.petit{font-size:17px;margin-top:0}
 .plage{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;color:var(--ink)}
 .plage label{display:flex;align-items:center;gap:6px;color:var(--ink)}
-.plage select{font:inherit;padding:7px 8px;border-radius:10px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
+.plage select{font:inherit;padding:7px 8px;border-radius:4px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
 .saison{display:flex;gap:8px;align-items:center;margin:14px 0 6px;color:var(--ink)}
 #ete{border-left:3px solid var(--accent);padding-left:12px}
 #resultat{margin-top:18px}#resultat h2{margin-top:6px}
-.frise{margin:6px 0 14px}.frise svg{width:100%;height:28px;border-radius:8px;background:rgba(127,127,127,.12);display:block}
+.frise{margin:6px 0 14px}.frise svg{width:100%;height:28px;border-radius:0;background:rgba(127,127,127,.12);display:block}
 .frise .pic{fill:rgba(220,70,60,.28)}.frise .creux{fill:var(--accent)}
 .heures{position:relative;height:18px;font-size:12px;color:var(--muted)}.heures span{position:absolute;transform:translateX(-50%)}
 .heures span:first-child{transform:none}.heures span:last-child{transform:translateX(-100%)}
 .legende{font-size:14px;margin:4px 0}.pastille{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px}
 .pastille.creux{background:var(--accent)}.pastille.pic{background:rgba(220,70,60,.35)}
-.constat{border-radius:12px;padding:10px 12px;color:var(--ink)}.constat.ok{background:rgba(22,163,111,.12)}.constat.warning{background:rgba(232,150,40,.15)}
+.constat{border-radius:0;padding:10px 12px;color:var(--ink)}.constat.ok{background:rgba(22,163,111,.12)}.constat.warning{background:rgba(232,150,40,.15)}
 .note{font-size:13px}
-.cta{background:var(--accent);border-radius:20px;padding:20px 22px;margin:28px 0}.cta p,.cta strong{color:#fff}
-.cta .btn{display:inline-block;background:#fff;color:#0E7A52;font-weight:700;border-radius:12px;padding:10px 16px;text-decoration:none;margin-top:6px}
+.cta{background:var(--accent);padding:var(--s4);margin:var(--s6) 0}.cta p,.cta strong{color:var(--bg)}
+.cta .btn{display:inline-block;background:var(--bg);color:var(--ink);font-weight:700;border-radius:0;padding:10px 16px;text-decoration:none;margin-top:6px}
+.cta .btn:hover,.cta .btn:focus-visible{background:var(--ink);color:var(--bg)}
 .heures span{white-space:nowrap}
 .champs{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
 .champs label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--muted)}
 .champs label span{display:flex;align-items:center;gap:6px;color:var(--ink)}
-.champs input{width:100%;font:inherit;font-size:17px;padding:9px 10px;border-radius:10px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
+.champs input{width:100%;font:inherit;font-size:17px;padding:9px 10px;border-radius:4px;border:1px solid rgba(127,127,127,.35);background:var(--bg);color:var(--ink)}
 .champs small{font-size:12px}
 #resultat table{width:100%;border-collapse:collapse}#resultat td{padding:8px 0;border-top:1px solid rgba(127,127,127,.2);color:var(--ink);vertical-align:top}
-#resultat td:last-child{text-align:right;padding-left:12px}
+#resultat td:last-child{text-align:right;padding-left:12px;font-variant-numeric:tabular-nums;font-weight:600}
 @media (max-width:560px){.champs{grid-template-columns:1fr}#resultat td:last-child{text-align:left}}
 .grille{overflow-x:auto;padding:8px 12px}.grille table{width:100%;border-collapse:collapse;font-size:15px}
 .grille th{font-size:12px;text-align:right;color:var(--muted);font-weight:600;padding:8px 6px;vertical-align:bottom}

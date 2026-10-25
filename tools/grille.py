@@ -34,13 +34,13 @@ def ecrire(date, grille_base, grille_hphc, nombre):
             abo = nombre(b["PART_FIXE_TTC"], 2)
             cellules += [eur(nombre(b["PART_VARIABLE_TTC"], 4), 4), f"{eur(abo)}<br><small>{eur(abo / 12)} / mois</small>"]
         else:
-            cellules += ["—", "—"]
+            cellules += ["n/p", "n/p"]
         if h:
             abo = nombre(h["PART_FIXE_TTC"], 2)
             cellules += [eur(nombre(h["PART_VARIABLE_HP_TTC"], 4), 4), eur(nombre(h["PART_VARIABLE_HC_TTC"], 4), 4),
                          f"{eur(abo)}<br><small>{eur(abo / 12)} / mois</small>"]
         else:
-            cellules += ["—", "—", "—"]
+            cellules += ["n/p", "n/p", "n/p"]
         lignes.append("<tr>" + "".join(f"<td>{c}</td>" for c in cellules) + "</tr>")
 
     six_b, six_h = grille_base[6], grille_hphc[6]
@@ -79,16 +79,16 @@ def ecrire(date, grille_base, grille_hphc, nombre):
 <html lang="fr"><head><meta charset="utf-8">{CSP}
 <title>Prix du kWh d'électricité {annee} : base et heures creuses, de 3 à 36 kVA | Creux</title>
 <meta name="description" content="Prix du kWh TTC en {annee} : {p_base} en option base, {p_hc} en heures creuses et {p_hp} en heures pleines (tarif réglementé depuis le {quand}). Abonnements de 3 à 36 kVA, mis à jour chaque semaine.">
-<link rel="canonical" href="{URL}"><link rel="stylesheet" href="style.css">
+<link rel="canonical" href="{URL}"><link rel="preload" href="fonts/plex-sans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="style.css">
 <script type="application/ld+json">{json.dumps(ld_table, ensure_ascii=False)}</script>
 <script type="application/ld+json">{json.dumps(ld_faq, ensure_ascii=False)}</script></head>
-<body><main><img class="icon" src="icon.png" alt="">
+<body><main><a class="marque" href="index.html"><img src="icon.png" alt="">Creux</a>
 <h1>Prix du kWh d'électricité en {annee}</h1>
 <p>Le tarif réglementé en vigueur depuis le <strong>{quand}</strong>, toutes taxes comprises, pour chaque puissance souscrite : prix du kWh et abonnement, en option base et en option heures pleines / heures creuses.</p>
 <div class="card grille"><table>
 <thead><tr><th>Puissance</th><th>kWh base</th><th>Abonnement base, par an</th><th>kWh heures pleines</th><th>kWh heures creuses</th><th>Abonnement heures creuses, par an</th></tr></thead>
 <tbody>{"".join(lignes)}</tbody></table></div>
-<p class="note">Source : open data de la Commission de régulation de l'énergie (historique des tarifs réglementés, licence ouverte) ; « — » : tarif non publié pour cette puissance. Page relue chaque semaine. Les offres de marché ont leurs propres prix : ta facture fait foi.</p>
+<p class="note">Source : open data de la Commission de régulation de l'énergie (historique des tarifs réglementés, licence ouverte) ; « : » : tarif non publié pour cette puissance. Page relue chaque semaine. Les offres de marché ont leurs propres prix : ta facture fait foi.</p>
 <div class="cta"><p><strong>{eur(nombre(six_h["PART_VARIABLE_HP_TTC"], 4) - nombre(six_h["PART_VARIABLE_HC_TTC"], 4), 4)} d'écart par kWh entre heures pleines et heures creuses.</strong> Creux te dit si c'est le moment de lancer les machines, calcule le départ différé à régler sur ton lave-linge ou ton lave-vaisselle et te prévient quand les heures creuses commencent. Sur iPhone, sans compte, achat unique.</p><a class="btn" href="https://apps.apple.com/fr/app/id6818609550">Télécharger Creux</a></div>
 {"".join(f"<h2>{q}</h2><p>{a}</p>" for q, a in faq)}
 <p>Aussi gratuit : <a href="heures-creuses-rentable.html">les heures creuses sont-elles rentables pour toi ?</a> · <a href="verifier-heures-creuses.html">vérifier si tes heures creuses vont changer</a></p>
